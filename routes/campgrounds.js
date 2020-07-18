@@ -63,6 +63,39 @@ router.get("/:id", (req, res) => {
     });
 });
 
+//Edit Route
+//Displaying the form
+router.get("/:id/edit", (req, res) => {
+  Campground.findById(req.params.id, function (err, foundCampground) {
+    if (err) res.redirect("/" + foundCampground._id + "/edit");
+    else {
+      res.render("campground/edit", { foundCampground, foundCampground });
+    }
+  });
+});
+
+//Saving the CHanges
+router.put("/:id", (req, res) => {
+  Campground.findByIdAndUpdate(req.params.id, req.body.campground, function (
+    err,
+    updatedCampground
+  ) {
+    if (err) res.redirect("/campgrounds");
+    else res.redirect("/campgrounds/" + req.params.id);
+  });
+});
+
+//Deleting a camoground
+router.delete("/:id", (req, res) => {
+  Campground.findByIdAndDelete(req.params.id, function (
+    err,
+    deletedCAmpground
+  ) {
+    if (err) res.redirect("/cmapgrounds");
+    else res.redirect("/campgrounds");
+  });
+});
+
 //Preventing actions if not logged in
 function isLoggedIn(req, res, next) {
   if (req.isAuthenticated()) {

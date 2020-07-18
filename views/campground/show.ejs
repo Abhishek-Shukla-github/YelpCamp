@@ -18,6 +18,18 @@
           <h4><a><%= foundCampground.name %></a></h4>
           <h4>Submitted by:-<a><%= foundCampground.author.username %></a></h4>
           <p>Description: <%= foundCampground.desc %></p>
+          <a
+            class="btn btn-warning"
+            href="/campgrounds/<%= foundCampground._id %>/edit"
+            >Edit</a
+          >
+          <form
+            id="deleteForm"
+            method="POST"
+            action="/campgrounds/<%= foundCampground._id %>?_method=DELETE"
+          >
+            <button class="btn btn-danger">Delete</button>
+          </form>
         </div>
       </div>
       <div class="well">

@@ -2,18 +2,20 @@ let express = require("express");
 let app = express();
 let bodyParser = require("body-parser");
 let mongoose = require("mongoose"),
+  methodOverride = require("method-override"),
   passport = require("passport"),
   LocalStrategy = require("passport-local"),
   passportLocalMongoose = require("passport-local-mongoose"),
-  User = require("./models/user.js");
-let seedDB = require("./seeds");
-let Comment = require("./models/comment");
-let Campground = require("./models/campground");
-let commentRoutes = require("./routes/comments");
-let campgroundRoutes = require("./routes/campgrounds");
-let authRoutes = require("./routes/index");
+  User = require("./models/user.js"),
+  seedDB = require("./seeds"),
+  Comment = require("./models/comment"),
+  Campground = require("./models/campground"),
+  commentRoutes = require("./routes/comments"),
+  campgroundRoutes = require("./routes/campgrounds"),
+  authRoutes = require("./routes/index");
 
 app.use(express.static(__dirname + "/public"));
+app.use(methodOverride("_method"));
 mongoose.set("useNewUrlParser", true);
 mongoose.set("useFindAndModify", false);
 mongoose.set("useCreateIndex", true);
