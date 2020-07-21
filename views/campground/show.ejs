@@ -26,7 +26,7 @@
             >Edit</a
           >
           <form
-            id="deleteForm"
+            id="deleteCampground"
             method="POST"
             action="/campgrounds/<%= foundCampground._id %>?_method=DELETE"
           >
@@ -51,6 +51,18 @@
             <strong><%= comment.author.username %></strong>
             <span class="pull-right">10 days ago</span>
             <p><%= comment.text %></p>
+            <a
+              href="/campgrounds/<%= foundCampground._id %>/comments/<%= comment._id %>/edit"
+              class="btn btn-warning btn-xs"
+              >Edit</a
+            >
+            <form
+              id="deleteComment"
+              action="/campgrounds/<%= foundCampground._id %>/comments/<%= comment._id %>?_method=DELETE"
+              method="POST"
+            >
+              <button class="btn btn-danger btn-xs">Delete</button>
+            </form>
             <hr />
           </div>
         </div>
