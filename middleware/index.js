@@ -31,4 +31,12 @@ middlewareObj.checkCommentOwnership = function (req, res, next) {
   } else res.redirect("back");
 };
 
+middlewareObj.isLoggedIn = function (req, res, next) {
+  if (req.isAuthenticated()) {
+    return next();
+  }
+  req.flash("error", "Please Login to perform this operation");
+  return res.redirect("/login");
+};
+
 module.exports = middlewareObj;

@@ -12,7 +12,8 @@ let mongoose = require("mongoose"),
   Campground = require("./models/campground"),
   commentRoutes = require("./routes/comments"),
   campgroundRoutes = require("./routes/campgrounds"),
-  authRoutes = require("./routes/index");
+  authRoutes = require("./routes/index"),
+  flash = require("connect-flash");
 
 app.use(express.static(__dirname + "/public"));
 app.use(methodOverride("_method"));
@@ -26,19 +27,10 @@ mongoose.createConnection("mongodb://localhost/Yelpcamp", {
 });
 
 // seedDB();
-app.use(function (req, res, next) {
-  res.locals.currentUser = req.user;
-  next();
-});
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.set("view engine", "ejs");
-
-app.get("/", (req, res) => {
-  res.render("./campground/landing");
-});
-
-//Passport Authentication
+//Passport Configuration
 app.use(
   require("express-session")({
     secret: "Ivar the Boneless!",
@@ -46,6 +38,18 @@ app.use(
     saveUninitialized: false,
   })
 );
+app.use(flash());
+app.use(function (req, res, next) {
+  res.locals.currentUser = req.user;
+  res.locals.error = req.flash("error");
+  res.locals.success = req.flash("success");
+  next();
+});
+
+app.get("/", (req, res) => {
+  res.render("./campground/landing");
+});
+
 app.use(passport.initialize());
 app.use(passport.session());
 passport.use(new LocalStrategy(User.authenticate()));
