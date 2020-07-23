@@ -30,11 +30,13 @@ router.post("/", middleware.isLoggedIn, (req, res) => {
   let name = req.body.name;
   let img = req.body.img;
   let desc = req.body.desc;
+  let price = req.body.price;
   let author = {
     id: req.user.id,
     username: req.user.username,
   };
   let camp = {
+    price: price,
     name: name,
     img: img,
     desc: desc,

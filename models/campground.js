@@ -2,6 +2,7 @@ let mongoose = require("mongoose");
 let Comment = require("./comment");
 let campgroundSchema = new mongoose.Schema({
   name: String,
+  price: String,
   img: String,
   author: {
     id: {
