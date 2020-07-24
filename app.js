@@ -17,14 +17,31 @@ let mongoose = require("mongoose"),
 
 app.use(express.static(__dirname + "/public"));
 app.use(methodOverride("_method"));
-mongoose.set("useNewUrlParser", true);
-mongoose.set("useFindAndModify", false);
-mongoose.set("useCreateIndex", true);
-mongoose.set("useUnifiedTopology", true);
-mongoose.connect("mongodb://localhost/YelpcampAuth", { useNewUrlParser: true });
-mongoose.createConnection("mongodb://localhost/Yelpcamp", {
-  useNewUrlParser: true,
-});
+// mongoose.set("useNewUrlParser", true);
+// mongoose.set("useFindAndModify", false);
+// mongoose.set("useCreateIndex", true);
+// mongoose.set("useUnifiedTopology", true);
+// mongoose.connect("mongodb://localhost/YelpcampAuth", { useNewUrlParser: true });
+// mongoose.createConnection("mongodb://localhost/Yelpcamp", {
+//   useNewUrlParser: true,
+// });
+// MONGODB SETUP
+console.log("database: " + process.env.DATABASEURL);
+const mongooseConnectString = process.env.DATABASEURL;
+
+mongoose
+  .connect(mongooseConnectString, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useFindAndModify: false,
+    useCreateIndex: true,
+  })
+  .then(() => {
+    console.log("Connected to DB " + process.env.DATABASEURL);
+  })
+  .catch((err) => {
+    console.log("ERROR:", err.message);
+  });
 
 // seedDB();
 
