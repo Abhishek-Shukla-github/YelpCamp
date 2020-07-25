@@ -50,8 +50,8 @@ app.set("view engine", "ejs");
 //Passport Configuration
 app.use(
   require("express-session")({
-    // secret: "Ivar the Boneless!",
-    secret: process.env.SECRET,
+    secret: "Ivar the Boneless!",
+    // secret: process.env.SECRET,
     resave: false,
     saveUninitialized: false,
   })
