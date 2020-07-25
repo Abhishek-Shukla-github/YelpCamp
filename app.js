@@ -15,6 +15,7 @@ let mongoose = require("mongoose"),
   authRoutes = require("./routes/index"),
   flash = require("connect-flash");
 
+require("dotenv").config();
 app.use(express.static(__dirname + "/public"));
 app.use(methodOverride("_method"));
 // mongoose.set("useNewUrlParser", true);
@@ -50,8 +51,8 @@ app.set("view engine", "ejs");
 //Passport Configuration
 app.use(
   require("express-session")({
-    secret: "Ivar the Boneless!",
-    // secret: process.env.SECRET,
+    // secret: "Ivar the Boneless!",
+    secret: process.env.SECRET,
     resave: false,
     saveUninitialized: false,
   })
