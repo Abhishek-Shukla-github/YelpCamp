@@ -50,7 +50,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.set("view engine", "ejs");
 //Passport Configuration
 app.use(
-  require("express-session")({
+  require("cookie-session")({
     // secret: "Ivar the Boneless!",
     secret: process.env.SECRET,
     resave: false,
