@@ -79,6 +79,7 @@ app.use(authRoutes);
 app.use("/campgrounds/:id/comments", commentRoutes);
 app.use("/campgrounds", campgroundRoutes);
 
-app.listen(3000, () => {
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, (req, res) => {
   console.log("Yelpcamp running on port 3000!");
 });
