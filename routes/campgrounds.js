@@ -174,16 +174,36 @@ router.put("/:id", checkCampgroundOwnership, upload.single("image"), function (
 });
 
 //Deleting a camoground
-router.delete("/:id", middleware.checkCampgroundOwnership, (req, res) => {
-  Campground.findByIdAndDelete(req.params.id, function (
-    err,
-    deletedCAmpground
-  ) {
+// router.delete("/:id", middleware.checkCampgroundOwnership, (req, res) => {
+//   Campground.findByIdAndDelete(req.params.id, function (
+//     err,
+//     deletedCAmpground
+//   ) {
+//     if (err) {
+//       res.redirect("/campgrounds");
+//     } else {
+//       req.flash("success", "Successfully Deleted the campground!");
+//       res.redirect("/campgrounds");
+//     }
+//   });
+// });
+
+router.delete("/:id", function (req, res) {
+  Campground.findById(req.params.id, async function (err, campground) {
     if (err) {
+      req.flash("error", err.message);
+      return res.redirect("back");
+    }
+    try {
+      await cloudinary.v2.uploader.destroy(campground.imageId);
+      campground.remove();
+      req.flash("success", "Campground deleted successfully!");
       res.redirect("/campgrounds");
-    } else {
-      req.flash("success", "Successfully Deleted the campground!");
-      res.redirect("/campgrounds");
+    } catch (err) {
+      if (err) {
+        req.flash("error", err.message);
+        return res.redirect("back");
+      }
     }
   });
 });
