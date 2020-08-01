@@ -3,7 +3,8 @@ let Comment = require("./comment");
 let campgroundSchema = new mongoose.Schema({
   name: String,
   price: String,
-  img: String,
+  image: String,
+  imageId: String,
   author: {
     id: {
       type: mongoose.Schema.Types.ObjectId,
